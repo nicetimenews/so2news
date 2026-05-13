@@ -6,17 +6,18 @@
   <title>Standoff 2 News</title>
   <style>
     :root {
-      --bg: #06111f;
-      --bg2: #0b1730;
-      --card: rgba(13, 24, 44, 0.9);
-      --card2: rgba(255,255,255,0.04);
-      --line: rgba(140, 170, 230, 0.18);
-      --text: #edf4ff;
-      --muted: #98a9c6;
-      --accent: #4da3ff;
-      --accent2: #75f0ff;
-      --good: #37d39e;
-      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --bg: #050507;
+      --bg2: #0b0b10;
+      --panel: rgba(14, 14, 18, 0.92);
+      --panel2: rgba(255, 255, 255, 0.03);
+      --line: rgba(255, 255, 255, 0.10);
+      --line2: rgba(255, 70, 70, 0.18);
+      --text: #f2f4f8;
+      --muted: #a1a7b3;
+      --red: #ff3b3b;
+      --red2: #ff6a3d;
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
       --radius: 22px;
     }
 
@@ -27,49 +28,73 @@
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(77,163,255,0.22), transparent 28%),
-        radial-gradient(circle at top right, rgba(117,240,255,0.12), transparent 26%),
+        radial-gradient(circle at top left, rgba(255, 59, 59, 0.18), transparent 26%),
+        radial-gradient(circle at top right, rgba(255, 106, 61, 0.12), transparent 24%),
         linear-gradient(180deg, var(--bg), var(--bg2));
     }
 
     .wrap {
-      width: min(1450px, calc(100% - 24px));
+      width: min(1500px, calc(100% - 24px));
       margin: 0 auto;
       padding: 18px 0 30px;
     }
 
     .hero {
       border: 1px solid var(--line);
-      background: linear-gradient(135deg, rgba(9,19,37,0.92), rgba(13,24,44,0.82));
       border-radius: 28px;
       overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255,59,59,0.16), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+        rgba(8, 8, 12, 0.92);
       box-shadow: var(--shadow);
     }
 
     .hero-top {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: 16px;
-      padding: 20px;
+      padding: 22px;
       align-items: stretch;
+      position: relative;
+    }
+
+    .hero-top::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 59, 59, 0.75), transparent);
     }
 
     .brand {
-      padding: 10px;
+      padding: 12px 10px 10px;
+      min-width: 0;
     }
 
     .brand h1 {
       margin: 0;
-      font-size: clamp(30px, 5vw, 58px);
-      line-height: 0.98;
-      letter-spacing: 0.5px;
+      font-size: clamp(32px, 5vw, 60px);
+      line-height: 0.96;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    .brand h1 span {
+      display: inline-block;
+      background: linear-gradient(90deg, #fff, #ff6969, #ff2d2d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .brand p {
       margin: 16px 0 0;
-      max-width: 760px;
-      color: #d6e2f4;
-      line-height: 1.6;
+      max-width: 860px;
+      color: #d8dce3;
+      line-height: 1.65;
       font-size: 15px;
     }
 
@@ -81,29 +106,39 @@
 
     .stat {
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
       border-radius: 20px;
       padding: 16px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-height: 110px;
+      min-height: 112px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .stat span { color: var(--muted); font-size: 13px; }
-    .stat strong { margin-top: 6px; font-size: 28px; }
+    .stat::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 59, 59, 0.12), transparent 55%);
+      pointer-events: none;
+    }
+
+    .stat span { color: var(--muted); font-size: 13px; position: relative; }
+    .stat strong { margin-top: 6px; font-size: 27px; position: relative; }
 
     .bar {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      padding: 0 20px 18px;
+      padding: 0 22px 18px;
     }
 
     .chip {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.05);
-      color: #dfeaff;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: #eef1f7;
       padding: 10px 14px;
       border-radius: 999px;
       font-size: 13px;
@@ -112,35 +147,83 @@
     .toolbar {
       margin-top: 16px;
       display: grid;
-      grid-template-columns: 1.5fr 0.6fr 0.6fr;
+      grid-template-columns: 1.2fr 0.45fr 0.45fr 0.45fr;
       gap: 12px;
     }
 
     .input, .select {
       width: 100%;
-      border: 1px solid rgba(140,170,230,0.22);
-      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
       color: var(--text);
       border-radius: 16px;
       padding: 13px 15px;
       font: inherit;
       outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
     }
 
-    .input::placeholder { color: #8ea0bf; }
-    .input:focus, .select:focus { border-color: rgba(77,163,255,0.9); box-shadow: 0 0 0 3px rgba(77,163,255,0.15); }
+    .input::placeholder { color: #9096a4; }
+    .input:focus, .select:focus {
+      border-color: rgba(255, 59, 59, 0.9);
+      box-shadow: 0 0 0 3px rgba(255,59,59,0.16);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font: inherit;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease, box-shadow .15s ease;
+      font-weight: 700;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-white {
+      background: var(--white);
+      color: #111;
+      box-shadow: 0 10px 24px rgba(255,255,255,0.08);
+    }
+
+    .btn-dark {
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .btn-red {
+      background: linear-gradient(135deg, var(--red), var(--red2));
+      color: white;
+      box-shadow: 0 12px 28px rgba(255, 59, 59, 0.25);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.16);
+    }
 
     .main {
       margin-top: 16px;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.1fr 0.9fr;
       gap: 16px;
       align-items: start;
     }
 
     .card {
       border: 1px solid var(--line);
-      background: var(--card);
+      background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow: hidden;
@@ -153,6 +236,7 @@
       gap: 12px;
       align-items: center;
       border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
     }
 
     .card-hd h2, .card-hd h3 { margin: 0; }
@@ -169,9 +253,10 @@
       aspect-ratio: 16 / 9;
       object-fit: cover;
       border-radius: 18px;
-      background: linear-gradient(135deg, rgba(77,163,255,0.18), rgba(117,240,255,0.08));
-      border: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(255,59,59,0.2), rgba(255,255,255,0.03));
+      border: 1px solid var(--line2);
       display: block;
+      cursor: pointer;
     }
 
     .meta-row {
@@ -186,23 +271,30 @@
       gap: 6px;
       padding: 7px 10px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-      color: #dfe9ff;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #eef2f7;
       font-size: 12px;
     }
 
     .featured h3 {
       margin: 0;
-      font-size: 26px;
+      font-size: 28px;
       line-height: 1.15;
     }
 
     .featured p {
       margin: 0;
-      color: #d4e0f2;
-      line-height: 1.7;
+      color: #d7dce5;
+      line-height: 1.8;
       white-space: pre-wrap;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
     }
 
     .news-list {
@@ -213,30 +305,43 @@
 
     .news-card {
       display: grid;
-      grid-template-columns: 130px 1fr;
+      grid-template-columns: 140px 1fr;
       gap: 14px;
       padding: 12px;
       border-radius: 18px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.10);
       cursor: pointer;
       transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .news-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--red), transparent);
+      opacity: 0.9;
     }
 
     .news-card:hover {
       transform: translateY(-2px);
-      border-color: rgba(77,163,255,0.55);
-      background: rgba(255,255,255,0.06);
+      border-color: rgba(255, 59, 59, 0.55);
+      background: rgba(255,255,255,0.055);
     }
 
     .thumb {
       width: 100%;
       height: 100%;
-      min-height: 90px;
+      min-height: 96px;
       object-fit: cover;
       border-radius: 14px;
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
     .news-body h4 {
@@ -247,8 +352,8 @@
 
     .news-body p {
       margin: 0;
-      color: #c9d6ea;
-      line-height: 1.55;
+      color: #c8cfdb;
+      line-height: 1.6;
       font-size: 14px;
       white-space: pre-wrap;
     }
@@ -262,6 +367,13 @@
       font-size: 12px;
     }
 
+    .news-actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
     .sidebox {
       display: grid;
       gap: 16px;
@@ -271,12 +383,28 @@
       padding: 18px;
     }
 
+    .side-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .side-item {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      line-height: 1.55;
+      color: #d8dee8;
+      font-size: 14px;
+    }
+
     .empty {
       padding: 22px;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.7;
       text-align: center;
-      border: 1px dashed rgba(140,170,230,0.25);
+      border: 1px dashed rgba(255,255,255,0.16);
       border-radius: 18px;
       background: rgba(255,255,255,0.03);
     }
@@ -287,19 +415,20 @@
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(0,0,0,0.62);
+      background: rgba(0,0,0,0.70);
       padding: 18px;
       z-index: 50;
+      backdrop-filter: blur(10px);
     }
 
     .modal.open { display: flex; }
 
     .modal-card {
-      width: min(980px, 100%);
+      width: min(1020px, 100%);
       max-height: 92vh;
       overflow: auto;
-      background: #081423;
-      border: 1px solid var(--line);
+      background: #09090d;
+      border: 1px solid rgba(255,255,255,0.12);
       border-radius: 24px;
       box-shadow: var(--shadow);
     }
@@ -310,18 +439,19 @@
       gap: 12px;
       align-items: center;
       padding: 16px 18px;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
     }
 
     .close {
       border: 0;
-      background: rgba(255,255,255,0.08);
-      color: var(--text);
+      background: var(--white);
+      color: #111;
       width: 42px;
       height: 42px;
       border-radius: 14px;
       cursor: pointer;
       font-size: 22px;
+      font-weight: 800;
     }
 
     .modal-body { padding: 18px; }
@@ -330,30 +460,38 @@
       aspect-ratio: 16 / 9;
       object-fit: cover;
       border-radius: 18px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(255,255,255,0.12);
       margin-bottom: 16px;
       background: rgba(255,255,255,0.03);
     }
 
-    .modal-title { margin: 0 0 10px; font-size: 30px; line-height: 1.15; }
-    .modal-text { margin: 0; color: #d7e3f5; line-height: 1.8; white-space: pre-wrap; }
+    .modal-title { margin: 0 0 10px; font-size: 32px; line-height: 1.12; }
+    .modal-text { margin: 0; color: #dbe1eb; line-height: 1.85; white-space: pre-wrap; }
 
     .footer {
       margin-top: 16px;
       color: var(--muted);
       text-align: center;
       font-size: 13px;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
-    @media (max-width: 1100px) {
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,59,59,0.7), transparent);
+      margin: 14px 0;
+    }
+
+    @media (max-width: 1180px) {
       .hero-top, .main, .toolbar { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 720px) {
       .news-card { grid-template-columns: 1fr; }
       .thumb { height: 190px; }
-      .brand h1 { line-height: 1.05; }
+      .brand h1 { line-height: 1.02; }
+      .news-info { gap: 6px; }
     }
   </style>
 </head>
@@ -364,11 +502,16 @@
         <div class="brand">
           <div class="meta-row" style="margin-bottom: 12px;">
             <span class="badge">Standoff 2 News</span>
+            <span class="badge">Black / Red Theme</span>
             <span class="badge">GitHub Pages</span>
-            <span class="badge">JSON-driven</span>
           </div>
-          <h1>Новости по Standoff 2</h1>
-          <p>Публичный сайт, который читает готовый <b>news.json</b> из репозитория и показывает новости как полноценный игровой портал. Ты просто заменяешь JSON — и сайт обновляется.</p>
+          <h1><span>Новости</span> Standoff 2</h1>
+          <p>Строгий новостной сайт для GitHub Pages. Он читает готовый <b>news.json</b>, поддерживает поиск, фильтры, сортировку, избранное и ручную загрузку JSON для локального теста.</p>
+          <div class="btn-row">
+            <button class="btn btn-white" id="reloadBtn">Обновить новости</button>
+            <button class="btn btn-red" id="toggleOnlyFavBtn">Показать избранное</button>
+            <button class="btn btn-dark" id="openUploadBtn">Загрузить JSON</button>
+          </div>
         </div>
 
         <div class="hero-stats">
@@ -381,12 +524,12 @@
             <strong id="visibleCount">0</strong>
           </div>
           <div class="stat">
-            <span>Последнее обновление</span>
-            <strong style="font-size: 18px;" id="lastUpdate">—</strong>
+            <span>Избранное</span>
+            <strong id="favCount">0</strong>
           </div>
           <div class="stat">
-            <span>Статус загрузки</span>
-            <strong style="font-size: 18px; color: var(--good);" id="statusText">Ожидание</strong>
+            <span>Статус</span>
+            <strong style="font-size: 18px;" id="statusText">Ожидание</strong>
           </div>
         </div>
       </div>
@@ -409,13 +552,17 @@
         <option value="newest">Сначала новые</option>
         <option value="oldest">Сначала старые</option>
       </select>
+      <select id="layoutMode" class="select">
+        <option value="cards">Карточки</option>
+        <option value="compact">Компактно</option>
+      </select>
     </div>
 
     <main class="main">
       <section class="card">
         <div class="card-hd">
           <h2>Главная новость</h2>
-          <small>Кликни по карточке, чтобы открыть полный текст</small>
+          <small>Нажми на карточку для полного просмотра</small>
         </div>
         <div class="featured" id="featuredBox">
           <div class="empty">Здесь появится первая новость после загрузки файла <b>news.json</b>.</div>
@@ -424,28 +571,28 @@
 
       <aside class="sidebox">
         <section class="card side-section">
-          <div class="card-hd" style="padding-left:0; padding-right:0; border-bottom: 0;">
-            <h3>Обновления сайта</h3>
-            <small>Простой блок справа</small>
+          <div class="card-hd" style="padding-left:0; padding-right:0; border-bottom: 0; background: transparent;">
+            <h3>Функции</h3>
+            <small>Что умеет сайт</small>
           </div>
-          <div style="color:#d6e3f6; line-height:1.7; font-size:14px;">
-            <p style="margin-top:0;">• Новости загружаются из JSON</p>
-            <p>• Можно добавлять хоть 10, хоть 100 новостей</p>
-            <p>• Для GitHub Pages это удобный статический формат</p>
-            <p style="margin-bottom:0;">• Позже можно добавить отдельные страницы новостей</p>
+          <div class="side-list">
+            <div class="side-item">• Поиск по заголовку, автору, категории и тексту</div>
+            <div class="side-item">• Сортировка от новых к старым и наоборот</div>
+            <div class="side-item">• Избранное сохраняется в браузере</div>
+            <div class="side-item">• Есть ручная загрузка JSON для локальной проверки</div>
           </div>
         </section>
 
         <section class="card side-section">
-          <div class="card-hd" style="padding-left:0; padding-right:0; border-bottom: 0;">
+          <div class="card-hd" style="padding-left:0; padding-right:0; border-bottom: 0; background: transparent;">
             <h3>Подключение</h3>
-            <small>Как использовать</small>
+            <small>Что положить рядом</small>
           </div>
-          <div style="color:#d6e3f6; line-height:1.7; font-size:14px;">
-            <p style="margin-top:0;">1. Положи этот файл как <b>index.html</b></p>
-            <p>2. Положи рядом <b>news.json</b></p>
-            <p>3. Добавь папку <b>images</b> с картинками</p>
-            <p style="margin-bottom:0;">4. Залей всё в репозиторий GitHub Pages</p>
+          <div class="side-list">
+            <div class="side-item">1. <b>index.html</b></div>
+            <div class="side-item">2. <b>news.json</b></div>
+            <div class="side-item">3. Папка <b>images/</b> при необходимости</div>
+            <div class="side-item">4. Всё загружаешь в репозиторий GitHub Pages</div>
           </div>
         </section>
       </aside>
@@ -460,8 +607,8 @@
     </section>
 
     <div class="footer">
-      Для работы сайта рядом с этим файлом должен лежать <b>news.json</b>.<br />
-      Если картинка в JSON указана ссылкой или base64, сайт покажет её автоматически.
+      Если ты запускаешь сайт локально без сервера, нажми <b>«Загрузить JSON»</b> и выбери файл вручную.<br />
+      На GitHub Pages просто положи <b>news.json</b> рядом с <b>index.html</b>.
     </div>
   </div>
 
@@ -481,20 +628,25 @@
     </div>
   </div>
 
+  <input id="jsonUpload" type="file" accept="application/json" hidden />
+
   <script>
     const state = {
       all: [],
-      visible: []
+      visible: [],
+      favorites: JSON.parse(localStorage.getItem('s2_favorites_v1') || '[]'),
+      onlyFavorites: false
     };
 
     const els = {
       totalCount: document.getElementById('totalCount'),
       visibleCount: document.getElementById('visibleCount'),
-      lastUpdate: document.getElementById('lastUpdate'),
+      favCount: document.getElementById('favCount'),
       statusText: document.getElementById('statusText'),
       search: document.getElementById('search'),
       filterCategory: document.getElementById('filterCategory'),
       sortBy: document.getElementById('sortBy'),
+      layoutMode: document.getElementById('layoutMode'),
       featuredBox: document.getElementById('featuredBox'),
       newsList: document.getElementById('newsList'),
       listHint: document.getElementById('listHint'),
@@ -503,7 +655,11 @@
       modalText: document.getElementById('modalText'),
       modalImg: document.getElementById('modalImg'),
       modalMeta: document.getElementById('modalMeta'),
-      closeModal: document.getElementById('closeModal')
+      closeModal: document.getElementById('closeModal'),
+      reloadBtn: document.getElementById('reloadBtn'),
+      toggleOnlyFavBtn: document.getElementById('toggleOnlyFavBtn'),
+      openUploadBtn: document.getElementById('openUploadBtn'),
+      jsonUpload: document.getElementById('jsonUpload')
     };
 
     function safeText(value) {
@@ -513,7 +669,6 @@
     function normalizeImage(image) {
       if (!image) return '';
       const value = String(image).trim();
-      if (!value) return '';
       return value;
     }
 
@@ -539,37 +694,67 @@
       return [];
     }
 
-    async function loadNews() {
+    function defaultImage(label = 'Standoff 2 News') {
+      return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0%" stop-color="#121218"/><stop offset="100%" stop-color="#2a0a0a"/></linearGradient></defs><rect width="1200" height="675" fill="url(#g)"/><rect x="70" y="70" width="1060" height="535" rx="36" fill="none" stroke="rgba(255,255,255,0.12)"/><text x="50%" y="49%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-size="58" font-family="Arial" font-weight="700">${label}</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="#ff6a3d" font-size="26" font-family="Arial">Black / Red News Hub</text></svg>`
+      );
+    }
+
+    function persistFavorites() {
+      localStorage.setItem('s2_favorites_v1', JSON.stringify(state.favorites));
+      renderCounts();
+    }
+
+    function isFavorite(id) {
+      return state.favorites.includes(id);
+    }
+
+    function toggleFavorite(id) {
+      if (isFavorite(id)) {
+        state.favorites = state.favorites.filter(x => x !== id);
+      } else {
+        state.favorites.unshift(id);
+      }
+      persistFavorites();
+      applyFilters();
+    }
+
+    async function loadNewsFromUrl() {
+      state.status = 'loading';
       els.statusText.textContent = 'Загрузка';
       try {
         const response = await fetch('./news.json', { cache: 'no-store' });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
-        state.all = toArray(data)
-          .map(item => ({
-            id: safeText(item.id) || crypto.randomUUID(),
-            title: safeText(item.title) || 'Без названия',
-            category: safeText(item.category) || 'Новости',
-            author: safeText(item.author) || 'Admin',
-            date: safeText(item.date) || new Date().toISOString(),
-            short: safeText(item.short) || '',
-            content: safeText(item.content) || safeText(item.text) || '',
-            image: normalizeImage(item.image),
-            imageName: safeText(item.imageName) || ''
-          }));
-
-        fillCategories();
-        applyFilters();
+        setNewsData(data);
         els.statusText.textContent = 'Готово';
-        els.lastUpdate.textContent = new Date().toLocaleString('ru-RU');
       } catch (err) {
         els.statusText.textContent = 'Нет JSON';
-        els.listHint.textContent = 'Не удалось загрузить news.json';
-        state.all = [];
-        state.visible = [];
-        renderEmpty();
         console.error(err);
+        if (!state.all.length) {
+          renderEmpty();
+          els.listHint.textContent = 'Загрузи news.json вручную или через сервер';
+        }
       }
+    }
+
+    function setNewsData(data) {
+      state.all = toArray(data)
+        .map(item => ({
+          id: safeText(item.id) || crypto.randomUUID(),
+          title: safeText(item.title) || 'Без названия',
+          category: safeText(item.category) || 'Новости',
+          author: safeText(item.author) || 'Admin',
+          date: safeText(item.date) || new Date().toISOString(),
+          short: safeText(item.short) || '',
+          content: safeText(item.content) || safeText(item.text) || '',
+          image: normalizeImage(item.image),
+          imageName: safeText(item.imageName) || ''
+        }));
+
+      fillCategories();
+      applyFilters();
+      els.statusText.textContent = 'Готово';
     }
 
     function fillCategories() {
@@ -581,12 +766,20 @@
       }
     }
 
+    function currentPool() {
+      return state.onlyFavorites
+        ? state.all.filter(n => isFavorite(n.id))
+        : state.all;
+    }
+
     function applyFilters() {
       const q = els.search.value.trim().toLowerCase();
       const cat = els.filterCategory.value;
       const sort = els.sortBy.value;
+      const layout = els.layoutMode.value;
 
-      let items = [...state.all];
+      let items = [...currentPool()];
+
       if (cat !== 'all') items = items.filter(n => n.category === cat);
       if (q) {
         items = items.filter(n => {
@@ -602,59 +795,101 @@
       });
 
       state.visible = items;
-      renderAll();
+      renderAll(layout);
     }
 
-    function renderAll() {
+    function renderCounts() {
       els.totalCount.textContent = state.all.length;
       els.visibleCount.textContent = state.visible.length;
+      els.favCount.textContent = state.favorites.length;
+    }
+
+    function renderAll(layoutMode = 'cards') {
+      renderCounts();
+      els.toggleOnlyFavBtn.textContent = state.onlyFavorites ? 'Показать все' : 'Показать избранное';
       els.listHint.textContent = state.visible.length ? 'Нажми на карточку, чтобы открыть новость' : 'Ничего не найдено';
 
       if (!state.visible.length) {
-        renderEmpty();
         renderFeatured(null);
+        renderEmpty();
         return;
       }
 
       renderFeatured(state.visible[0]);
-      els.newsList.innerHTML = state.visible.map((item, index) => renderCard(item, index)).join('');
+      els.newsList.innerHTML = state.visible.map((item, index) => renderCard(item, index, layoutMode)).join('');
     }
 
     function renderEmpty() {
       els.newsList.innerHTML = '<div class="empty">Новостей пока нет или они не подходят под текущий фильтр.</div>';
       if (!state.visible.length) {
-        els.featuredBox.innerHTML = '<div class="empty">Здесь появится первая новость после загрузки файла <b>news.json</b>.</div>';
+        els.featuredBox.innerHTML = '<div class="empty">Здесь появится главная новость после загрузки <b>news.json</b>.</div>';
+        els.featuredBox.style.cursor = 'default';
+        els.featuredBox.onclick = null;
       }
     }
 
     function renderFeatured(item) {
       if (!item) {
-        els.featuredBox.innerHTML = '<div class="empty">Здесь появится первая новость после загрузки файла <b>news.json</b>.</div>';
+        els.featuredBox.innerHTML = '<div class="empty">Здесь появится главная новость после загрузки <b>news.json</b>.</div>';
+        els.featuredBox.style.cursor = 'default';
+        els.featuredBox.onclick = null;
         return;
       }
 
-      const img = item.image || 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675"><rect width="1200" height="675" fill="#0b1730"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#84a8dd" font-size="48" font-family="Arial">Standoff 2 News</text></svg>`);
+      const img = item.image || defaultImage('Standoff 2 News');
       els.featuredBox.innerHTML = `
         <img class="featured-image" src="${escapeHtml(img)}" alt="${escapeHtml(item.title)}" />
         <div class="meta-row">
           <span class="badge">${escapeHtml(item.category)}</span>
           <span class="badge">${escapeHtml(formatDate(item.date))}</span>
           <span class="badge">${escapeHtml(item.author)}</span>
+          <span class="badge">${isFavorite(item.id) ? 'В избранном' : 'Не в избранном'}</span>
         </div>
         <h3>${escapeHtml(item.title)}</h3>
         <p>${escapeHtml(item.short || item.content || '')}</p>
+        <div class="news-actions">
+          <button class="btn btn-white" data-open="${escapeHtml(item.id)}">Открыть</button>
+          <button class="btn btn-red" data-fav="${escapeHtml(item.id)}">${isFavorite(item.id) ? 'Убрать из избранного' : 'В избранное'}</button>
+        </div>
       `;
 
-      const featured = els.featuredBox.querySelector('.featured-image, .empty');
-      if (featured && featured.classList && featured.classList.contains('featured-image')) {
-        featured.addEventListener('click', () => openModal(item));
-      }
       els.featuredBox.style.cursor = 'pointer';
       els.featuredBox.onclick = () => openModal(item);
+      els.featuredBox.querySelector('[data-open]')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openModal(item);
+      });
+      els.featuredBox.querySelector('[data-fav]')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFavorite(item.id);
+      });
+      const imgEl = els.featuredBox.querySelector('.featured-image');
+      if (imgEl) imgEl.addEventListener('click', () => openModal(item));
     }
 
-    function renderCard(item, index) {
-      const img = item.image || 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260"><rect width="400" height="260" fill="#0b1730"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#84a8dd" font-size="20" font-family="Arial">No image</text></svg>`);
+    function renderCard(item, index, layoutMode) {
+      const img = item.image || defaultImage('No image');
+      if (layoutMode === 'compact') {
+        return `
+          <article class="news-card" data-index="${index}" style="grid-template-columns: 110px 1fr;">
+            <img class="thumb" src="${escapeHtml(img)}" alt="${escapeHtml(item.title)}" />
+            <div class="news-body">
+              <div class="meta-row" style="margin-bottom:8px;">
+                <span class="badge">${escapeHtml(item.category)}</span>
+                <span class="badge">${escapeHtml(formatDate(item.date))}</span>
+              </div>
+              <h4>${escapeHtml(item.title)}</h4>
+              <p>${escapeHtml(item.short || item.content || '')}</p>
+              <div class="news-info">
+                <span>Автор: ${escapeHtml(item.author)}</span>
+                <span>•</span>
+                <span>${isFavorite(item.id) ? '★ Избранное' : '☆ Обычная'}</span>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
       return `
         <article class="news-card" data-index="${index}">
           <img class="thumb" src="${escapeHtml(img)}" alt="${escapeHtml(item.title)}" />
@@ -662,6 +897,7 @@
             <div class="meta-row" style="margin-bottom:8px;">
               <span class="badge">${escapeHtml(item.category)}</span>
               <span class="badge">${escapeHtml(formatDate(item.date))}</span>
+              <span class="badge">${isFavorite(item.id) ? 'Избранное' : 'Новость'}</span>
             </div>
             <h4>${escapeHtml(item.title)}</h4>
             <p>${escapeHtml(item.short || item.content || '')}</p>
@@ -682,9 +918,9 @@
         <span class="badge">${escapeHtml(item.category)}</span>
         <span class="badge">${escapeHtml(formatDate(item.date))}</span>
         <span class="badge">${escapeHtml(item.author)}</span>
+        <span class="badge">${isFavorite(item.id) ? 'В избранном' : 'Не в избранном'}</span>
       `;
-      const img = item.image || 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675"><rect width="1200" height="675" fill="#0b1730"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#84a8dd" font-size="48" font-family="Arial">Standoff 2 News</text></svg>`);
-      els.modalImg.src = img;
+      els.modalImg.src = item.image || defaultImage('Standoff 2 News');
       els.modalImg.alt = item.title;
       els.modal.classList.add('open');
     }
@@ -696,8 +932,14 @@
     els.search.addEventListener('input', applyFilters);
     els.filterCategory.addEventListener('change', applyFilters);
     els.sortBy.addEventListener('change', applyFilters);
+    els.layoutMode.addEventListener('change', applyFilters);
 
     els.newsList.addEventListener('click', (e) => {
+      const favBtn = e.target.closest('[data-fav]');
+      if (favBtn) {
+        toggleFavorite(favBtn.dataset.fav);
+        return;
+      }
       const card = e.target.closest('.news-card');
       if (!card) return;
       const item = state.visible[Number(card.dataset.index)];
@@ -712,7 +954,40 @@
       if (e.key === 'Escape') closeModal();
     });
 
-    loadNews();
+    els.reloadBtn.addEventListener('click', () => {
+      if (state.all.length) {
+        fillCategories();
+        applyFilters();
+      } else {
+        loadNewsFromUrl();
+      }
+    });
+
+    els.toggleOnlyFavBtn.addEventListener('click', () => {
+      state.onlyFavorites = !state.onlyFavorites;
+      applyFilters();
+    });
+
+    els.openUploadBtn.addEventListener('click', () => els.jsonUpload.click());
+    els.jsonUpload.addEventListener('change', async () => {
+      const file = els.jsonUpload.files && els.jsonUpload.files[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
+        setNewsData(data);
+        els.statusText.textContent = 'JSON загружен';
+      } catch (err) {
+        alert('Не удалось прочитать JSON. Проверь формат файла.');
+        console.error(err);
+      } finally {
+        els.jsonUpload.value = '';
+      }
+    });
+
+    // Init
+    renderCounts();
+    loadNewsFromUrl();
   </script>
 </body>
-</html>
+</html>"}]}
