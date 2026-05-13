@@ -789,20 +789,12 @@
         </nav>
 
         <div class="side-box">
-          <h3>Загрузка JSON</h3>
-          <p>Если сайт открыт локально, JSON можно выбрать вручную. На хостинге он подхватится автоматически.</p>
-          <div class="upload">
-            <label class="btn btn-white" for="jsonUpload">Выбрать JSON</label>
-            <button class="btn btn-dark" id="reloadBtn" type="button">Перезагрузить</button>
-            <input id="jsonUpload" type="file" accept="application/json" />
-          </div>
-          <div class="small-note">Нужен файл с массивом статей: title, category, date, excerpt, image и content.</div>
+
+
         </div>
 
         <div class="side-box" style="border-color: rgba(255,45,45,0.25); background: linear-gradient(180deg, rgba(255,45,45,0.12), rgba(255,255,255,0.02));">
           <h3>Поддержка</h3>
-          <p>В этом блоке можно оставить важное сообщение, ссылку или кнопку без лишнего оформления.</p>
-          <div style="height:12px"></div>
           <button class="btn btn-red" type="button">Поддержать</button>
         </div>
       </div>
@@ -832,26 +824,14 @@
             <div class="hero-copy">
               <div class="kicker" id="heroKicker">Статья</div>
               <h2 id="heroTitle">Здесь будут <span>новости и статьи</span></h2>
-              <p id="heroText">Подключи news.json — и сайт автоматически покажет статьи, фильтры и карточки. Сейчас здесь только рабочая структура без выдуманных новостей.</p>
               <div class="hero-controls">
                 <button class="btn btn-white" id="heroOpenBtn" type="button">Открыть статью</button>
-                <button class="btn btn-dark" id="heroPrevBtn" type="button">Назад</button>
-                <button class="btn btn-red" id="heroNextBtn" type="button">Вперёд</button>
               </div>
               <div class="dots" id="heroDots"></div>
             </div>
           </div>
 
           <div class="hero-side">
-            <div class="mini-card" style="background-image:url('https://images.unsplash.com/photo-1511735111819-9a3f7709049c?auto=format&fit=crop&w=900&q=80');">
-              <div><strong>Чтение статей</strong><span>Кликаешь по карточке и открываешь полный текст в окне.</span></div>
-            </div>
-            <div class="mini-card" style="background-image:url('https://images.unsplash.com/photo-1547347298-4074fc3086f0?auto=format&fit=crop&w=900&q=80');">
-              <div><strong>Категории</strong><span>Новости, обновления, турниры, слухи и гайды.</span></div>
-            </div>
-            <div class="mini-card" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80');">
-              <div><strong>Рабочий шаблон</strong><span>Только функции чтения, поиска и фильтрации.</span></div>
-            </div>
           </div>
         </div>
       </section>
@@ -890,9 +870,6 @@
 
         <div class="right-section" style="padding-top: 14px;">
           <div class="news-grid" id="newsGrid"></div>
-          <div class="footer" id="about">
-            Простой новостник для чтения статей. Никаких лишних кнопок и фальшивых новостей.
-          </div>
         </div>
       </section>
     </main>
