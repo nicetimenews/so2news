@@ -550,7 +550,7 @@
     }
 
     function loadFromJsonUrl() {
-      fetch('./news.json', { cache: 'no-store' })
+      fetch('./news-index.json', { cache: 'no-store' })
         .then(r => {
           if (!r.ok) throw new Error(`HTTP ${r.status}`);
           return r.json();
