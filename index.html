@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
@@ -338,6 +338,7 @@
         <h1><span>NEWS</span> HUB</h1>
         <small>ARTICLES</small>
       </div>
+
       <div class="controls">
         <input class="search" id="searchInput" type="search" placeholder="Поиск по статьям..." />
         <select class="select" id="sortSelect">
@@ -345,8 +346,9 @@
           <option value="oldest">Сначала старые</option>
         </select>
       </div>
+
       <div class="tabs" id="tabs"></div>
-      <div class="status" id="statusText">Чтение файла news.json из этой же папки...</div>
+      <div class="status" id="statusText">Чтение файла news-index.json...</div>
     </section>
 
     <section class="panel" style="padding: 18px; display: grid; gap: 14px;" id="articles">
@@ -359,7 +361,6 @@
       </div>
 
       <div class="news-grid" id="newsGrid"></div>
-    
     </section>
   </div>
 
@@ -463,7 +464,60 @@
       return [];
     }
 
-    function setPosts(data) {
+    async function fetchJsonSafe(url) {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    }
+
+    async function loadAllPosts() {
+      els.statusText.textContent = 'Чтение news-index.json...';
+      try {
+        const indexData = await fetchJsonSafe('./news-index.json');
+        const files = Array.isArray(indexData) ? indexData : [];
+
+        if (!files.length) {
+          state.posts = [];
+          els.statusText.textContent = 'news-index.json пустой';
+          renderTabs();
+          renderPosts();
+          return;
+        }
+
+        const loaded = await Promise.allSettled(
+          files.map(async (file) => {
+            const data = await fetchJsonSafe(`./${file}`);
+            return toArray(data);
+          })
+        );
+
+        const flat = [];
+        for (const item of loaded) {
+          if (item.status === 'fulfilled') {
+            flat.push(...item.value);
+          }
+        }
+
+        setPosts(flat, `Загружено файлов: ${files.length}`);
+      } catch (err) {
+        console.error(err);
+
+        // fallback: if someone still uses only news.json
+        try {
+          els.statusText.textContent = 'news-index.json не найден, пробую news.json...';
+          const data = await fetchJsonSafe('./news.json');
+          setPosts(toArray(data), 'Загружен news.json');
+        } catch (err2) {
+          console.error(err2);
+          state.posts = [];
+          els.statusText.textContent = 'Не удалось прочитать новости';
+          renderTabs();
+          renderPosts();
+        }
+      }
+    }
+
+    function setPosts(data, statusText) {
       state.posts = toArray(data).map((item, i) => ({
         id: String(item.id || `post-${i + 1}`),
         title: String(item.title || '').trim(),
@@ -474,10 +528,7 @@
         image: String(item.image || '').trim(),
       })).filter(p => p.title || p.excerpt || p.content);
 
-      els.statusText.textContent = state.posts.length
-        ? `news.json загружен: ${state.posts.length} статей`
-        : 'news.json пустой или не содержит статей';
-
+      els.statusText.textContent = `${statusText}: ${state.posts.length} статей`;
       renderTabs();
       renderPosts();
     }
@@ -549,21 +600,6 @@
       els.overlay.classList.remove('open');
     }
 
-    function loadFromJsonUrl() {
-      fetch('./news-index.json', { cache: 'no-store' })
-        .then(r => {
-          if (!r.ok) throw new Error(`HTTP ${r.status}`);
-          return r.json();
-        })
-        .then(setPosts)
-        .catch(() => {
-          state.posts = [];
-          els.statusText.textContent = 'Не удалось прочитать news.json из папки рядом с сайтом';
-          renderTabs();
-          renderPosts();
-        });
-    }
-
     els.tabs.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-filter]');
       if (!btn) return;
@@ -591,11 +627,13 @@
       if (e.target === els.overlay) closeModal();
     });
     els.closeModal.addEventListener('click', closeModal);
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeModal();
     });
 
     renderTabs();
-    loadFromJsonUrl();
+    loadAllPosts();
   </script>
-</
+</body>
+</html>
